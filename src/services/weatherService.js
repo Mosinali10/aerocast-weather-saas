@@ -1,7 +1,15 @@
 import axios from 'axios';
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+const RAW_KEY = import.meta.env.VITE_WEATHER_API_KEY || '';
+const API_KEY = RAW_KEY.trim();
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+
+// Debug check for Vercel (safe-masked)
+if (!API_KEY) {
+    console.error('CRITICAL: VITE_WEATHER_API_KEY is missing from environment.');
+} else {
+    console.log(`Telemetry Protocol: Initialized with key ending in "...${API_KEY.slice(-4)}"`);
+}
 
 const api = axios.create({
     baseURL: BASE_URL,
