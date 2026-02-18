@@ -19,14 +19,14 @@ AeroCast is a production-grade, glassmorphism-themed weather dashboard built wit
 - **Styling**: Tailwind CSS (Custom Glassmorphism utilities)
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **API**: Axios + Weatherstack API
+- **API**: Axios + OpenWeather API (HTTPS)
 
 ## 🚀 Installation & Setup
 
 1. **Clone the repository**:
    ```bash
-   git clone <your-repo-url>
-   cd aerocast
+   git clone https://github.com/Mosinali10/aerocast-weather-saas.git
+   cd aerocast-weather-saas
    ```
 
 2. **Install dependencies**:
@@ -37,32 +37,30 @@ AeroCast is a production-grade, glassmorphism-themed weather dashboard built wit
 3. **Configure Environment Variables**:
    Create a `.env` file in the root directory:
    ```env
-   VITE_WEATHER_API_KEY=your_weatherstack_api_key_here
+   VITE_WEATHER_API_KEY=your_openweather_api_key_here
    ```
 
 4. **Start Development Server**:
    ```bash
-   npm run dev
+   npm run dev (or npm.cmd run dev on Windows)
    ```
 
 ## 🌐 Deployment to Vercel
 
-AeroCast is optimized for Vercel deployment:
+AeroCast is fully optimized for Vercel with HTTPS support:
 
-1. Push your code to a GitHub repository.
-2. Import the project in Vercel.
-3. In the "Environment Variables" section, add:
+1. Import your GitHub repository in Vercel.
+2. In the **Environment Variables** section, add:
    - Key: `VITE_WEATHER_API_KEY`
-   - Value: `6f0b88fb119538cdd3211f63616adcf2` (or your personal key)
-4. Click **Deploy**.
+   - Value: (Your OpenWeather API Key)
+3. Click **Deploy**.
 
 ## ⚠️ API Plan Limitations
 
-The application uses the **Weatherstack Free Tier**, which has the following restrictions:
-- **No HTTPS support**: Standard HTTP is used for requests.
-- **Historical Data**: Limited availability depending on the region/date.
-- **Marine Weather**: Mocked data is used as the free plan restricts maritime endpoints.
-- **Forecasts**: Daily forecasts are limited to 7 days on higher tiers.
+The application uses the **OpenWeather Free Tier**:
+- **HTTPS support**: Fully supported and secure for Vercel.
+- **Archive Telemetry**: High-fidelity 5-day/3-hour forecast is used as a fallback for historical analysis.
+- **Marine Weather**: Mocked data is used for oceanic dashboards.
 
 ---
 Designed with ❤️ for premium atmospheric analysis.

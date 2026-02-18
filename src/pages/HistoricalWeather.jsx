@@ -6,58 +6,47 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const HistoricalWeather = () => {
     const [city, setCity] = useState('');
-    const [date, setDate] = useState('');
     const { data, loading, error, fetchHistorical } = useWeather();
 
     const handleSearch = (e) => {
         e.preventDefault();
-        if (city && date) {
-            fetchHistorical(city, date);
+        if (city) {
+            fetchHistorical(city);
         }
     };
 
     return (
-        <div className="space-y-12 py-8">
+        <div className="space-y-12 py-12">
             <div className="text-center space-y-4">
-                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-                    Time-Travel <span className="text-primary-400">Meteorology.</span>
+                <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">
+                    Archive <span className="text-primary-500">Telemetry.</span>
                 </h1>
-                <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                    Access historical climate data for any global location.
-                    Perfect for retrospectives and environmental analysis.
+                <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+                    Review predictive and historical trajectory patterns Across
+                    the global atmospheric timeline.
                 </p>
             </div>
 
-            <form onSubmit={handleSearch} className="max-w-4xl mx-auto glass-card p-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-end border-white/5">
-                <div className="md:col-span-1">
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto glass-card p-4 flex gap-4 items-center border-white/5">
+                <div className="flex-grow">
                     <Input
-                        label="Target Location"
-                        placeholder="e.g. London"
+                        placeholder="Enter location for analysis..."
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         icon={Search}
                     />
                 </div>
-                <div className="md:col-span-1">
-                    <Input
-                        label="Specific Date"
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        icon={Calendar}
-                    />
-                </div>
                 <button
                     type="submit"
-                    disabled={loading || !city || !date}
-                    className="btn-primary h-[58px] flex items-center justify-center gap-2 group"
+                    disabled={loading || !city}
+                    className="btn-primary flex items-center justify-center gap-2 group w-48"
                 >
                     {loading ? (
                         <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                     ) : (
                         <HistoryIcon className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                     )}
-                    Analyze History
+                    Analyze
                 </button>
             </form>
 
@@ -97,7 +86,9 @@ const HistoricalWeather = () => {
                                                         <span className="text-white font-bold tracking-tight">Avg Temperature</span>
                                                     </td>
                                                     <td className="px-8 py-6 text-primary-400 font-black text-2xl tracking-tighter">{details.avgtemp}°<span className="text-primary-500/30">C</span></td>
-                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed">Mean atmospheric state for {date}</td>
+                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed uppercase tracking-tighter">
+                                                        Averages: {details.summary}
+                                                    </td>
                                                 </tr>
                                                 <tr className="hover:bg-white/5 transition-colors">
                                                     <td className="px-8 py-6 flex items-center gap-4">
@@ -107,7 +98,9 @@ const HistoricalWeather = () => {
                                                         <span className="text-white font-bold tracking-tight">Peak Intensity</span>
                                                     </td>
                                                     <td className="px-8 py-6 text-slate-200 font-black text-2xl tracking-tighter">{details.maxtemp}°<span className="text-red-500/30">C</span></td>
-                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed">Maximum thermal registration</td>
+                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed uppercase tracking-tighter">
+                                                        Threshold: {details.summary}
+                                                    </td>
                                                 </tr>
                                                 <tr className="hover:bg-white/5 transition-colors">
                                                     <td className="px-8 py-6 flex items-center gap-4">
@@ -117,7 +110,9 @@ const HistoricalWeather = () => {
                                                         <span className="text-white font-bold tracking-tight">Baseline Min</span>
                                                     </td>
                                                     <td className="px-8 py-6 text-slate-200 font-black text-2xl tracking-tighter">{details.mintemp}°<span className="text-blue-500/30">C</span></td>
-                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed">Minimal thermal threshold</td>
+                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed uppercase tracking-tighter">
+                                                        Minimums: {details.summary}
+                                                    </td>
                                                 </tr>
                                                 <tr className="hover:bg-white/5 transition-colors border-b-0">
                                                     <td className="px-8 py-6 flex items-center gap-4">
@@ -127,7 +122,9 @@ const HistoricalWeather = () => {
                                                         <span className="text-white font-bold tracking-tight">Solar Exposure</span>
                                                     </td>
                                                     <td className="px-8 py-6 text-slate-200 font-black text-2xl tracking-tighter">{details.sunhour || 'N/A'} <span className="text-emerald-500/30 font-bold uppercase text-[10px]">HRS</span></td>
-                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed">Total duration of solar presence</td>
+                                                    <td className="px-8 py-6 text-slate-400 text-xs font-medium leading-relaxed uppercase tracking-tighter">
+                                                        State: {details.summary}
+                                                    </td>
                                                 </tr>
                                             </React.Fragment>
                                         ))}

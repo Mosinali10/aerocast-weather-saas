@@ -1,52 +1,46 @@
 import axios from 'axios';
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-const BASE_URL = 'http://api.weatherstack.com'; // Removed trailing slash
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 const api = axios.create({
     baseURL: BASE_URL,
 });
 
 export const weatherService = {
-    getCurrentWeather: async (query) => {
+    getCurrentWeather: async (city) => {
         try {
-            const response = await api.get('/current', {
+            const response = await api.get('/weather', {
                 params: {
-                    access_key: API_KEY,
-                    query: query
+                    q: city,
+                    appid: API_KEY,
+                    units: 'metric'
                 },
             });
-
-            if (response.data.error) {
-                const errorInfo = response.data.error.info || 'Incompatible API Response';
-                throw new Error(errorInfo);
-            }
-
             return response.data;
         } catch (error) {
             if (error.response?.status === 401) {
-                throw new Error('Invalid API Key. Please check your .env configuration.');
+                throw new Error('Invalid OpenWeather API Key. Please verify in Vercel settings.');
             }
-            throw error;
+            if (error.response?.status === 404) {
+                throw new Error('Location not found. Please clarify your search.');
+            }
+            throw new Error(error.response?.data?.message || 'Atmospheric telemetry failed');
         }
     },
 
-    getHistoricalWeather: async (query, date) => {
+    getForecast: async (city) => {
         try {
-            const response = await api.get('/historical', {
+            const response = await api.get('/forecast', {
                 params: {
-                    query,
-                    historical_date: date
+                    q: city,
+                    appid: API_KEY,
+                    units: 'metric'
                 },
             });
-
-            if (response.data.error) {
-                throw new Error(response.data.error.info || 'Failed to fetch historical data');
-            }
-
             return response.data;
         } catch (error) {
-            throw error;
+            throw new Error(error.response?.data?.message || 'Archive retrieval failed');
         }
     },
 };
