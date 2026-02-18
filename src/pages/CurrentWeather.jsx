@@ -130,11 +130,11 @@ const CurrentWeather = () => {
                                                     <MapPin className="h-4 w-4" />
                                                     <span className="text-sm font-black uppercase tracking-widest">Atmospheric Station</span>
                                                 </div>
-                                                <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-2">
+                                                <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter mb-2 break-words max-w-[15ch] md:max-w-none leading-none">
                                                     {currentWeather.name}
-                                                    <span className="text-primary-500/20 ml-4 font-normal text-4xl">{currentWeather.sys.country}</span>
+                                                    <span className="text-primary-500/20 ml-2 md:ml-4 font-normal text-2xl md:text-4xl">{currentWeather.sys.country}</span>
                                                 </h2>
-                                                <p className="text-slate-400 text-xl font-medium line-clamp-1 italic italic capitalize">
+                                                <p className="text-slate-400 text-lg md:text-xl font-medium line-clamp-2 md:line-clamp-1 italic capitalize max-w-xl">
                                                     {currentWeather.weather[0].description} — The atmosphere is currently {currentWeather.weather[0].main.toLowerCase()}
                                                 </p>
                                             </div>
